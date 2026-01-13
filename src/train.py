@@ -1,7 +1,7 @@
 import os
 import pickle
 import pandas as pd
-
+import time
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
@@ -52,6 +52,9 @@ def main():
 
     with open(model_path, "wb") as f:
         pickle.dump(model_bundle, f)
+    
+    time.sleep(500)
+    
 
     print("✅ Model trained and saved successfully.")
 

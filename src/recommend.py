@@ -40,6 +40,7 @@ def recomendar_canciones(emocion, top_n=5):
     resultados = []
     for _, row in top_canciones.iterrows():
         resultados.append({
+            "name": row["name"],
             "artist": row["artists"],
             "year": row["year"],
             "emotion": emocion,
