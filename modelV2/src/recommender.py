@@ -7,9 +7,9 @@ import random
 # CONFIG
 # ========================
 
-FEATURES_PATH = "data/processed/features_scaled.npy"
-METADATA_PATH = "data/processed/metadata.csv"
-MODEL_PATH = "data/processed/kmeans_model.pkl"
+FEATURES_PATH = "modelV2/data/processed/features_scaled.npy"
+METADATA_PATH = "modelV2/data/processed/metadata.csv"
+MODEL_PATH = "modelV2/data/processed/kmeans_model.pkl"
 
 N_RECOMMENDATIONS = 10
 
