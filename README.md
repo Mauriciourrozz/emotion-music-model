@@ -9,8 +9,8 @@ The system works in two stages:
 
 ---
 
-## 📁 Project Structure
-
+## Project Structure
+```bash
 emotion-music-model/
 │
 ├── modelV1/ # Emotion detection model (text → emotion)
@@ -31,6 +31,7 @@ emotion-music-model/
 │
 ├── README.md
 └── .gitignore
+```
 
 ---
 
@@ -114,3 +115,4 @@ Recommended song:
 ## Authors
 Mauricio Urroz - https://github.com/Mauriciourrozz  
 Luna Leguisamo - https://github.com/LunaLeguisamo
+
