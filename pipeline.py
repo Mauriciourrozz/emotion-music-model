@@ -37,11 +37,11 @@ def recommend_song_from_text(text):
 # ========================
 
 if __name__ == "__main__":
-    print("\n🎧 Emotion-based Music Recommender")
+    print("\n🎧 EMOMU - Emotional Music Recommender")
     print("Type a sentence and press Enter (type 'exit' to quit)\n")
 
     while True:
-        text = input("You: ")
+        text = input("How do you feel today? ")
         if text.lower() in ["exit", "quit"]:
             break
 
@@ -49,4 +49,4 @@ if __name__ == "__main__":
 
         print(f"\nDetected emotion: {emotion}")
         print("Recommended song:")
-        print(f"🎵 {song['name']} — {song['artists']} ({song['year']})\n")
+        print(f"🎵 {song['name']} — {song['artists']}\n")

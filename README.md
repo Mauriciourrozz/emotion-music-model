@@ -15,18 +15,21 @@ emotion-music-model/
 │
 ├── modelV1/ # Emotion detection model (text → emotion)
 │ ├── data/
-│ ├── notebooks/
-│ ├── scripts/
-│ └── requirements.txt
+│ ├── requirements.txt
+│ ├── data_processed.py
+│ ├── tokenize_data.py
+│ ├── model_training.py
+│ └── predict_emotion.py
 │
 ├── modelV2/ # Music recommender (clustering)
 │ ├── data/
 │ │ ├── raw/
 │ │ └── processed/
-│ ├── preprocess.py
+│ ├── src/
+│ │ ├── preprocess.py
+│ │ ├── validation.py
+│ │ └── recommender.py
 │ ├── train.py
-│ ├── validation.py
-│ ├── recommender.py
 │ └── requirements.txt
 │
 ├── README.md
@@ -72,11 +75,40 @@ pip install -r requirements.txt
 
 ---
 
+## Running Model 1 (Emotion Detection)
+**1. Process raw data**
+```bash
+cd modelV1
+python data_processed.py
+```
+
+**2. Tokenize data**
+```bash
+python tokenize_data.py
+```
+
+**3. Train the model**
+```bash
+python model_training.py
+```
+
+**4. Predict emotion**
+```bash
+python predict_emotion.py
+```
+
+Notes:
+- `predict_emotion.py` loads a local model from `modelV1/emotion_model` if it exists.
+- If it doesn't exist, it falls back to the hosted model `1un4-13guis4m0/emotion-distilbert-ekman`.
+- `modelV2/src/recommender.py` will use local `modelV2/data/processed/*` if present,
+  otherwise it downloads artifacts from `1un4-13guis4m0/emotion-music-model` on Hugging Face.
+  You can override the repo with `EMOMU_HF_REPO`.
+
 ## Running the Music Recommender (Model 2)
 **1. Preprocess data**
 ```bash
 cd modelV2
-python preprocess.py
+python src/preprocess.py
 ```
 
 **2. Train clustering model**
@@ -86,7 +118,7 @@ python train.py
 
 **3. Validate model**
 ```bash
-python validation.py
+python src/validation.py
 ```
 
 **4. running app**

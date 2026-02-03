@@ -7,13 +7,13 @@ from transformers import (
 from sklearn.metrics import accuracy_score, f1_score
 from datasets import load_from_disk
 
+# Load tokenized 
 tokenized_train = load_from_disk("data/tokenized_train")
 tokenized_dev = load_from_disk("data/tokenized_dev")
 tokenized_test = load_from_disk("data/tokenized_test")
 
 """Entrena un modelo de clasificación de emociones utilizando datos tokenizados.
 """
-# Load tokenized 
 
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
@@ -27,12 +27,20 @@ def compute_metrics(eval_pred):
 MODEL_NAME = "distilbert-base-uncased"
 NUM_LABELS = 4  # joy, anger, sadness, fear
 
+LABEL2ID = {
+    "joy": 0,
+    "anger": 1,
+    "sadness": 2,
+    "fear": 3
+}
+ID2LABEL = {v: k for k, v in LABEL2ID.items()}
+
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_NAME,
-    num_labels=4
+    num_labels=NUM_LABELS,
+    id2label=ID2LABEL,
+    label2id=LABEL2ID
 )
-
-
 
 training_args = TrainingArguments(
     output_dir="./results",

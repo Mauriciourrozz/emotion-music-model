@@ -13,9 +13,9 @@ def load_split(path):
     return df[["text", "labels"]]
 
 """Cargar splits de datos"""
-train = load_split("train.tsv")
-dev   = load_split("dev.tsv")
-test  = load_split("test.tsv")
+train = load_split("data/train.tsv")
+dev = load_split("data/dev.tsv")
+test = load_split("data/test.tsv")
 
 """Mapeo de IDs a emociones GO"""
 id2emotion = {
@@ -50,7 +50,7 @@ id2emotion = {
 }
 
 """Cargar mapeo de emociones GO a categorías de Ekman"""
-with open("ekman_mapping.json", "r") as f:
+with open("data/ekman_mapping.json", "r") as f:
     ekman_mapping = json.load(f)
 
 """Crear mapeo inverso de GO a Ekman"""
@@ -92,9 +92,9 @@ dev_processed = process_split(dev)
 test_processed = process_split(test)
 
 # Guardar resultados
-train_processed.to_csv("train_processed.csv", index=False)
-dev_processed.to_csv("dev_processed.csv", index=False)
-test_processed.to_csv("test_processed.csv", index=False)
+train_processed.to_csv("data/train_processed.csv", index=False)
+dev_processed.to_csv("data/dev_processed.csv", index=False)
+test_processed.to_csv("data/test_processed.csv", index=False)
 
 print("Archivos generados:")
 print("- train_processed.csv")

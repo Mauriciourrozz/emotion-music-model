@@ -1,15 +1,21 @@
+from functools import lru_cache
+from pathlib import Path
+import os
 import numpy as np
 import pandas as pd
 import pickle
 import random
+from huggingface_hub import hf_hub_download
 
 # ========================
 # CONFIG
 # ========================
 
-FEATURES_PATH = "modelV2/data/processed/features_scaled.npy"
-METADATA_PATH = "modelV2/data/processed/metadata.csv"
-MODEL_PATH = "modelV2/data/processed/kmeans_model.pkl"
+BASE_DIR = Path(__file__).resolve().parents[1]
+FEATURES_PATH = BASE_DIR / "data" / "processed" / "features_scaled.npy"
+METADATA_PATH = BASE_DIR / "data" / "processed" / "metadata.csv"
+MODEL_PATH = BASE_DIR / "data" / "processed" / "kmeans_model.pkl"
+HF_REPO_ID = os.getenv("EMOMU_HF_REPO", "1un4-13guis4m0/emotion-music-model")
 
 N_RECOMMENDATIONS = 10
 
@@ -24,28 +30,47 @@ EMOTION_TO_CLUSTER = {
     "intense": 2
 }
 
-# ========================
-# LOAD DATA
-# ========================
+def _get_file(path: Path, label: str, filename: str) -> Path:
+    if path.exists():
+        return path
 
-print("Loading model and data...")
+    try:
+        print(f"Downloading {label} from Hugging Face repo: {HF_REPO_ID}")
+        downloaded = hf_hub_download(
+            repo_id=HF_REPO_ID,
+            filename=filename,
+        )
+        return Path(downloaded)
+    except Exception as exc:
+        raise FileNotFoundError(
+            f"Missing {label} at {path} and failed to download "
+            f"from {HF_REPO_ID}. Upload artifacts or run preprocessing/training."
+        ) from exc
 
-X = np.load(FEATURES_PATH)
-metadata = pd.read_csv(METADATA_PATH)
 
-with open(MODEL_PATH, "rb") as f:
-    model = pickle.load(f)
+@lru_cache(maxsize=1)
+def _load_assets():
+    features_path = _get_file(FEATURES_PATH, "features", "features_scaled.npy")
+    metadata_path = _get_file(METADATA_PATH, "metadata", "metadata.csv")
+    model_path = _get_file(MODEL_PATH, "kmeans model", "kmeans_model.pkl")
 
-labels = model.predict(X)
-metadata["cluster"] = labels
+    X = np.load(features_path)
+    metadata = pd.read_csv(metadata_path)
 
-print("Data loaded successfully")
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+
+    labels = model.predict(X)
+    metadata["cluster"] = labels
+
+    return X, metadata, model
 
 # ========================
 # RECOMMENDER FUNCTION
 # ========================
 
 def recommend_by_emotion(emotion, n=N_RECOMMENDATIONS):
+    _, metadata, _ = _load_assets()
     emotion = emotion.lower()
 
     if emotion not in EMOTION_TO_CLUSTER:
