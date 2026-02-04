@@ -7,10 +7,8 @@ import pickle
 import random
 from huggingface_hub import hf_hub_download
 
-# ========================
-# CONFIG
-# ========================
 
+# config
 BASE_DIR = Path(__file__).resolve().parents[1]
 FEATURES_PATH = BASE_DIR / "data" / "processed" / "features_scaled.npy"
 METADATA_PATH = BASE_DIR / "data" / "processed" / "metadata.csv"
@@ -19,7 +17,7 @@ HF_REPO_ID = os.getenv("EMOMU_HF_REPO", "1un4-13guis4m0/emotion-music-model")
 
 N_RECOMMENDATIONS = 10
 
-# Emoción → cluster (ajustado a tus perfiles)
+# cluster label
 EMOTION_TO_CLUSTER = {
     "happy": 0,
     "joy": 0,
@@ -65,9 +63,7 @@ def _load_assets():
 
     return X, metadata, model
 
-# ========================
-# RECOMMENDER FUNCTION
-# ========================
+# recommend function
 
 def recommend_by_emotion(emotion, n=N_RECOMMENDATIONS):
     _, metadata, _ = _load_assets()
@@ -90,10 +86,7 @@ def recommend_by_emotion(emotion, n=N_RECOMMENDATIONS):
 
     return recommendations[["name", "artists", "year"]]
 
-
-# ========================
-# MANUAL TEST
-# ========================
+# main
 
 if __name__ == "__main__":
     emotion = "happy"

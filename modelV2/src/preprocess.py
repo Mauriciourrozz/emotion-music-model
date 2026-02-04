@@ -10,9 +10,7 @@ META = ["name", "artists", "year"]
 print("Loading dataset...")
 df = pd.read_csv(DATASET_PATH)
 
-# ------------------------
-# FILTRO FUERTE (MÚSICA REAL)
-# ------------------------
+# real music, no podscats
 df = df[
     (df["speechiness"] < 0.33) &
     (df["instrumentalness"] < 0.5) &
