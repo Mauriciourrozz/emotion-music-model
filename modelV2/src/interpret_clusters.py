@@ -12,12 +12,11 @@ metadata = pd.read_csv("data/processed/metadata.csv")
 with open("data/processed/kmeans_model.pkl", "rb") as f:
     model = pickle.load(f)
 
-# --------------------
-# ASSIGN CLUSTERS
-# --------------------
+# Assign clusters
 labels = model.predict(X)
 metadata["cluster"] = labels
 
+<<<<<<< HEAD
 # --------------------
 # RECOVER ORIGINAL SCALE
 # --------------------
@@ -25,6 +24,10 @@ metadata["cluster"] = labels
 raw = pd.read_csv("data/raw/spotify_dataset_1921_2020.csv")
 
 # Reapply the SAME filter as preprocess
+=======
+raw = pd.read_csv("data/raw/spotify_dataset_1921_2020.csv")
+
+>>>>>>> 067a8aeba3c22a530b91f02e8dd269a45b2f2185
 raw = raw[
     (raw["speechiness"] < 0.33) &
     (raw["instrumentalness"] < 0.5) &
@@ -36,17 +39,13 @@ raw = raw[
 
 raw["cluster"] = labels
 
-# --------------------
-# CLUSTER PROFILES
-# --------------------
+# Cluster profiles
 print("\nCluster profiles (mean values):\n")
 
 cluster_profiles = raw.groupby("cluster")[FEATURES].mean()
 print(cluster_profiles)
 
-# --------------------
-# SAMPLE SONGS PER CLUSTER
-# --------------------
+# sample song per cluster
 print("\nSample songs per cluster:\n")
 
 for cluster_id in sorted(raw["cluster"].unique()):
