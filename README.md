@@ -1,6 +1,6 @@
 # Emotion-Based Music Recommendation System
 ---
-This project combines **emotion detection from text** with a **music recommendation system**
+This project combines **emotion detection from text** with a **music recommendation system**.
 
 The system works in two stages:
 
@@ -52,22 +52,32 @@ emotion-music-model/
 
 ---
 
+## Quickstart (End-to-End)
+Run the full pipeline to go from text input → emotion → recommendation.
+```bash
+pip install -r modelV1/requirements.txt
+pip install -r modelV2/requirements.txt
+python pipeline.py
+```
+
+---
+
 ## Installation
 
-### Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/Mauriciourrozz/emotion-music-model.git
 cd emotion-music-model
 ```
 
-### Install Model 1 dependencies:
+### Install Model 1 dependencies
 ```bash
 cd modelV1
 pip install -r requirements.txt
 ```
 
-### Install Model 2 dependencies:
+### Install Model 2 dependencies
 ```bash
 cd modelV2
 pip install -r requirements.txt
@@ -121,7 +131,7 @@ python train.py
 python src/validation.py
 ```
 
-**4. running app**
+**4. Run the app**
 ```bash
 cd ..
 python pipeline.py

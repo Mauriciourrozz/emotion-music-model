@@ -18,7 +18,7 @@ EKMAN_TO_RECOMMENDER = {
 
 def recommend_song_from_text(text):
     """
-    Recibe un texto, detecta la emoción y recomienda UNA canción.
+    Takes a text input, detects the emotion, and recommends ONE song.
     """
     detected_emotion = predict_emotion(text)
 

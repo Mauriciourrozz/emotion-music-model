@@ -12,8 +12,7 @@ tokenized_train = load_from_disk("data/tokenized_train")
 tokenized_dev = load_from_disk("data/tokenized_dev")
 tokenized_test = load_from_disk("data/tokenized_test")
 
-"""Entrena un modelo de clasificación de emociones utilizando datos tokenizados.
-"""
+"""Trains an emotion classification model using tokenized data."""
 
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
@@ -54,7 +53,7 @@ training_args = TrainingArguments(
     logging_steps=100,
     load_best_model_at_end=True,
     metric_for_best_model="f1",
-    report_to="none"  # evita warnings de wandb
+    report_to="none"  # avoid wandb warnings
 )
 
 trainer = Trainer(

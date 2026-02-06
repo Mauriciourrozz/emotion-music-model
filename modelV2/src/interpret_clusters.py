@@ -21,10 +21,10 @@ metadata["cluster"] = labels
 # --------------------
 # RECOVER ORIGINAL SCALE
 # --------------------
-# Volvemos a cargar el dataset original para interpretar valores reales
+# Reload the original dataset to interpret real values
 raw = pd.read_csv("data/raw/spotify_dataset_1921_2020.csv")
 
-# Reaplicamos el MISMO filtro que preprocess
+# Reapply the SAME filter as preprocess
 raw = raw[
     (raw["speechiness"] < 0.33) &
     (raw["instrumentalness"] < 0.5) &

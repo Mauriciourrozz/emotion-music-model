@@ -19,7 +19,7 @@ HF_REPO_ID = os.getenv("EMOMU_HF_REPO", "1un4-13guis4m0/emotion-music-model")
 
 N_RECOMMENDATIONS = 10
 
-# Emoción → cluster (ajustado a tus perfiles)
+# Emotion → cluster (tuned to your profiles)
 EMOTION_TO_CLUSTER = {
     "happy": 0,
     "joy": 0,

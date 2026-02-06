@@ -23,7 +23,7 @@ print("Features shape:", X.shape)
 print("Metadata shape:", metadata.shape)
 
 # --------------------
-# HARD FAIL SI ALGO ESTÁ MAL
+# HARD FAIL IF SOMETHING IS WRONG
 # --------------------
 if len(X) != len(metadata):
     raise RuntimeError(

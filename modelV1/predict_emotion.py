@@ -2,9 +2,9 @@ from pathlib import Path
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-"""Script para predecir la emoción de un texto dado utilizando un modelo preentrenado."""
+"""Predicts the emotion of a given text using a pretrained model."""
 
-# Configuración
+# Configuration
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 HF_MODEL_NAME = "1un4-13guis4m0/emotion-distilbert-ekman"
 DEFAULT_LOCAL_PATH = Path(__file__).resolve().parent / "emotion_model"
@@ -21,7 +21,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_source)
 id2label = model.config.id2label
 MAX_LENGTH = 128
 
-# Función de predicción
+# Prediction function
 def predict_emotion(text):
     inputs = tokenizer(
         text,

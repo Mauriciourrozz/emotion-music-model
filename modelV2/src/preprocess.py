@@ -11,7 +11,7 @@ print("Loading dataset...")
 df = pd.read_csv(DATASET_PATH)
 
 # ------------------------
-# FILTRO FUERTE (MÚSICA REAL)
+# STRICT FILTER (REAL MUSIC)
 # ------------------------
 df = df[
     (df["speechiness"] < 0.33) &

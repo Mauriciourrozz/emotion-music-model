@@ -2,22 +2,22 @@ import pandas as pd
 import json
 
 """
-Carga los datos y procesa las etiquetas de emociones
-mapeándolas a las categorías de Ekman.
+Loads the data and processes emotion labels,
+mapping them to Ekman categories.
 """
 
 def load_split(path):
-    """Carga un split de datos desde un archivo TSV."""
+    """Loads a data split from a TSV file."""
     df = pd.read_csv(path, sep="\t", header=None)
     df.columns = ["text", "labels", "id"]
     return df[["text", "labels"]]
 
-"""Cargar splits de datos"""
+"""Load data splits"""
 train = load_split("data/train.tsv")
 dev = load_split("data/dev.tsv")
 test = load_split("data/test.tsv")
 
-"""Mapeo de IDs a emociones GO"""
+"""GO emotion ID mapping"""
 id2emotion = {
     0: "admiration",
     1: "amusement",
@@ -49,32 +49,32 @@ id2emotion = {
     27: "neutral"
 }
 
-"""Cargar mapeo de emociones GO a categorías de Ekman"""
+"""Load GO emotion mapping to Ekman categories"""
 with open("data/ekman_mapping.json", "r") as f:
     ekman_mapping = json.load(f)
 
-"""Crear mapeo inverso de GO a Ekman"""
+"""Create reverse mapping from GO to Ekman"""
 go2ekman = {}
 for ekman, emotions in ekman_mapping.items():
     for e in emotions:
         go2ekman[e] = ekman
 
-"""Procesar datos y mapear etiquetas"""
+"""Process data and map labels"""
 def parse_label_ids(label_str):
     return [int(x) for x in str(label_str).split(",")]
 
-"""Convertir IDs a emociones GO"""
+"""Convert IDs to GO emotions"""
 def ids_to_go_emotions(ids):
     return [id2emotion[i] for i in ids]
 
-"""Mapear emociones GO a categorías de Ekman"""
+"""Map GO emotions to Ekman categories"""
 def map_to_ekman(go_emotions):
     mapped = [go2ekman[e] for e in go_emotions if e in go2ekman]
     if len(mapped) == 0:
         return None
-    return mapped[0]  # emoción dominante
+    return mapped[0]  # dominant emotion
 
-"""Procesar un split completo"""
+"""Process a full split"""
 def process_split(df):
     df = df.copy()
 
@@ -86,12 +86,12 @@ def process_split(df):
     
     return df
 
-# Procesar splits
+# Process splits
 train_processed = process_split(train)
 dev_processed = process_split(dev)
 test_processed = process_split(test)
 
-# Guardar resultados
+# Save results
 train_processed.to_csv("data/train_processed.csv", index=False)
 dev_processed.to_csv("data/dev_processed.csv", index=False)
 test_processed.to_csv("data/test_processed.csv", index=False)

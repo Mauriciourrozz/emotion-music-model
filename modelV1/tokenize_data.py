@@ -3,14 +3,14 @@ from datasets import Dataset
 from transformers import AutoTokenizer
 
 """
-Tokeniza los datos procesados para su uso con modelos de Transformers.
+Tokenizes processed data for use with Transformers models.
 """
 # Load processed CSVs
 train_df = pd.read_csv("data/train_processed.csv")
 dev_df = pd.read_csv("data/dev_processed.csv")
 test_df = pd.read_csv("data/test_processed.csv")
 
-"""Mapear emociones GO a etiquetas numéricas"""
+"""Map GO emotions to numeric labels"""
 # Label mapping
 label2id = {
     "joy": 0,
@@ -25,7 +25,7 @@ def encode_labels(df):
     df["label"] = df["emotion"].map(label2id)
     return df
 
-"""Aplicar codificación de etiquetas"""
+"""Apply label encoding"""
 train_df = encode_labels(train_df)
 dev_df = encode_labels(dev_df)
 test_df = encode_labels(test_df)
